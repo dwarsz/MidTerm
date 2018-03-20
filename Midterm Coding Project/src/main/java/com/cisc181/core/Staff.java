@@ -2,6 +2,10 @@ package com.cisc181.core;
 
 import java.util.Date;
 
+import java.util.ArrayList;
+
+import java.util.*;
+
 import com.cisc181.eNums.eTitle;
 
 public class Staff extends Employee {
@@ -19,8 +23,7 @@ public class Staff extends Employee {
 	        return this.Title;
 	    }
 
-    
-
+	    
     
 	public Staff(String FirstName, String MiddleName, String LastName,
 			Date DOB, String Address, String Phone_number, String Email,
@@ -33,5 +36,6 @@ public class Staff extends Employee {
 		
 		this.Title = Title;
 	}
+	
 
 }

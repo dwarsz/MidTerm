@@ -5,6 +5,9 @@ import java.util.Date;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import com.cisc181exceptions.PersonException;
+
+
 /*
  * comment
  */
@@ -17,7 +20,12 @@ public abstract class Person implements java.io.Serializable {
 	private String address;
 	private String phone_number;
 	private String email_address;
+	
+	String regex = "^\\(?([0-9]{3})\\)?[-.\\s]?([0-9]{3})[-.\\s]?([0-9]{4})$";
 
+	Pattern pattern = Pattern.compile(regex);
+	
+		
 	public String getFirstName() {
 		return FirstName;
 	}
@@ -42,15 +50,26 @@ public abstract class Person implements java.io.Serializable {
 		this.LastName = LastName;
 	}
 
-	public Date getDOB() {
-		return DOB;
-	}
-
-	public void setDOB(Date DOB){
-		this.DOB = DOB;
+	//public Date getDOB() {
+		//return DOB;
+	//}
+	
+	@SuppressWarnings("deprecation")
+	public void setDOB(Date DOB) throws PersonException {
+		if(this.DOB.getYear() >= 18) {
+			throw new PersonException(this.DOB.toString());
+		}
+		this.DOB = DOB;}
+	
+	
 		
+		public Date getDOB() {
+			
 		
-	}
+		return DOB;	}
+	
+		
+	
 
 	public void setAddress(String newAddress) {
 		address = newAddress;
@@ -60,7 +79,16 @@ public abstract class Person implements java.io.Serializable {
 		return address;
 	}
 
-	public void setPhone(String newPhone_number) {
+	public void setPhone(String newPhone_number) throws PersonException {
+		
+		Matcher matcher = pattern.matcher(phone_number);
+		
+		if (matcher.matches()) {
+			throw new PersonException(this.phone_number.toString());
+		}
+			
+		
+
 		phone_number = newPhone_number;
 	
 	}
@@ -88,14 +116,27 @@ public abstract class Person implements java.io.Serializable {
 	 * Constructors Constructor with arguments
 	 */
 
+	@SuppressWarnings("deprecation")
 	public Person(String FirstName, String MiddleName, String LastName,
-			Date DOB, String Address, String Phone_number, String Email)
+			Date DOB, String Address, String Phone_number, String Email) throws PersonException
 	{
 		this.FirstName = FirstName;
 		this.MiddleName = MiddleName;
 		this.LastName = LastName;
+		
+		if(this.DOB.getYear()>= 18) {
+			throw new PersonException(this.DOB.toString());
+		}
+		
 		this.setDOB(DOB);
 		this.address = Address;
+			
+		Matcher matcher = pattern.matcher(phone_number);
+			
+		if (matcher.matches()) {
+			throw new PersonException(this.phone_number.toString());
+			}
+		
 		this.setPhone(Phone_number);
 		this.email_address = Email;
 		
